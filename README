@@ -1,0 +1,2 @@
+start with: pm2 start app.js -- "Databasename" 
+        oder node app.js "Databasename"
