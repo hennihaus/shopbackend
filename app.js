@@ -11,14 +11,12 @@ const initDatabaseConnection = require('./dbConnection.js');
 const app = express();
 
 const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT || 3005;
-const frontendHostname = process.env.FRONTEND_HOST || 'localhost';
-const frontendPort = process.env.FRONTEND_PORT || 3000;
+const port = process.env.PORT || 4201;
 const dbHostname = process.env.DB_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || 27017;
 
 app.use(cors({
-    origin: `http://${frontendHostname}:${frontendPort}`,
+    origin: 'http://localhost:4200',
     credentials: true
 }))
 
