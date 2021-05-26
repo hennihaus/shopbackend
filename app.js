@@ -5,24 +5,25 @@ var cors = require('cors')
 
 const dotenv = require("dotenv");
 dotenv.config();
-
 const initDatabaseConnection = require('./dbConnection.js');
-
 
 
 const app = express();
 
+const hostname = process.env.HOST || 'localhost';
+const port = process.env.PORT || 3005;
+const frontendHostname = process.env.FRONTEND_HOST || 'localhost';
+const frontendPort = process.env.FRONTEND_PORT || 3000;
+const dbHostname = process.env.DB_HOST || 'localhost';
+const dbPort = process.env.DB_PORT || 27017;
 
 app.use(cors({
-  origin:"http://localhost:3000",
-  credentials:true
+    origin: `http://${frontendHostname}:${frontendPort}`
 }))
 
-//default port if an error occurred
-let port =3020;
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json())
 app.use(cookieParser());
@@ -31,34 +32,14 @@ app.use(cookieParser());
 app.use('/images', express.static(__dirname + '/images'));
 
 
-initDatabaseConnection(process.argv[2]);
+initDatabaseConnection(dbHostname, dbPort);
 
 
 require('./routes/session/session')(app);
+require('./routes/shop/routes')(app)
 
-
-
-switch (process.argv[2]){
-  case "shop":
-    port =3005;
-    require('./routes/shop/routes')(app);
-    break;
-  case "fastfood":
-    port =3010;
-    require('./routes/fastfood/routes')(app);
-    break;
-  case "fitness":
-    port =3015;
-    require('./routes/fitness/routes')(app);
-    break;
-  default:
-    app.get('/', (req, res) => {
-      res.send('something went wrong');
-    });
-}
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(port, hostname, () => {
+    console.log(`Example app listening at http://${hostname}:${port}`)
 });
 
 

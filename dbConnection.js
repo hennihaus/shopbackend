@@ -2,9 +2,9 @@
 const mongoose = require('mongoose');
 
 
-function initDatabaseConnection (database){
+function initDatabaseConnection(dbHostname, dbPort) {
     //Set up default mongoose connection
-    const mongoDB = `mongodb://127.0.0.1:27017/${database}`;
+    const mongoDB = `mongodb://${dbHostname}:${dbPort}/shop`;
     mongoose.connect(mongoDB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -17,7 +17,7 @@ function initDatabaseConnection (database){
 
     //Bind connection to error event (to get notification of connection errors)
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-    db.once('open', function() {
+    db.once('open', function () {
         console.log("MongoDB connected");
     });
 }
