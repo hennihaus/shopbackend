@@ -10,8 +10,6 @@ const initDatabaseConnection = require('./dbConnection.js');
 
 const app = express();
 
-const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT || 4201;
 const dbHostname = process.env.DB_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || 27017;
 
@@ -37,8 +35,8 @@ initDatabaseConnection(dbHostname, dbPort);
 require('./routes/session/session')(app);
 require('./routes/shop/routes')(app)
 
-app.listen(port, hostname, () => {
-    console.log(`Example app listening at http://${hostname}:${port}`)
+app.listen(4201, () => {
+    console.log(`Example app listening at http://localhost:4201`)
 });
 
 
