@@ -14,7 +14,7 @@ const dbHostname = process.env.DB_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || 27017;
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: '*',
     credentials: true
 }))
 
